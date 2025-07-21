@@ -1,6 +1,7 @@
 import express from 'express'; 
 import cors from 'cors';       
 import dotenv from 'dotenv';  
+import { db } from './config/firebaseAdmin.js';
 
 
 dotenv.config({ path: '../.env' }); 
@@ -20,7 +21,11 @@ app.use(express.json());
 
 // Basic test route for the root URL of the API
 app.get('/api', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the StudentOS API!' });
+  if (db) {
+    res.status(200).json({ message: 'Welcome to the StudentOS API!', firebaseInitialized: true });
+  } else {
+    res.status(500).json({ message: 'Welcome to the StudentOS API!', firebaseInitialized: false, error: 'Firestore not initialized' });
+  }
 });
 
 // TODO
