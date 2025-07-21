@@ -1,21 +1,13 @@
-// server/server.js
-
-// Import the configured Express app from app.js
 import app from './app.js';
-// Import Node.js's built-in http module to create an HTTP server
 import http from 'http';
-// Import Socket.io for real-time communication
 import { Server } from 'socket.io';
 
-// Get the port from environment variables, default to 5000 if not set
 const PORT = process.env.PORT || 5000;
 
-// Create an HTTP server using the Express app
-// This server will handle both regular HTTP requests and Socket.io connections.
+// HTTP server using the Express app
 const server = http.createServer(app);
 
 // Initialize Socket.io server
-// `cors` options here are crucial to allow your frontend to connect to the Socket.io server.
 const io = new Server(server, {
   cors: {
     origin: process.env.VITE_API_BASE_URL ? process.env.VITE_API_BASE_URL.replace('/api', '') : 'http://localhost:5173', // Adjust origin to match your client's URL
@@ -23,7 +15,8 @@ const io = new Server(server, {
   },
 });
 
-// --- Socket.io Event Handling ---
+
+// Socket.io Event Handling
 
 // Listen for new Socket.io connections
 io.on('connection', (socket) => {
