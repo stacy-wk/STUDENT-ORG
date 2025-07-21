@@ -29,12 +29,10 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  // Example: Listen for a 'testMessage' event from the client
+  // Listen for a 'testMessage' event from the client
   socket.on('testMessage', (data) => {
     console.log(`Received test message from ${socket.id}: ${data}`);
-    // Emit a 'testResponse' back to the client that sent the message
     socket.emit('testResponse', `Server received: ${data}`);
-    // You could also broadcast to all connected clients: io.emit('someEvent', data);
   });
 
   // Listen for disconnect event
@@ -42,15 +40,12 @@ io.on('connection', (socket) => {
     console.log(`User disconnected: ${socket.id}`);
   });
 
-  // TODO: Add more specific Socket.io event listeners here for chat rooms, notifications, etc.
-  // Example for chat:
+  // TODO:
   // socket.on('joinGroup', (groupId) => { ... });
   // socket.on('sendMessage', (messageData) => { ... });
 });
 
-// --- Start the Server ---
-
-// Make the HTTP server listen for incoming requests on the specified port
+// Start the Server 
 server.listen(PORT, () => {
   console.log(`StudentOS Server running on port ${PORT}`);
   console.log(`API available at http://localhost:${PORT}/api`);
