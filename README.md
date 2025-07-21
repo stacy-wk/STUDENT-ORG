@@ -1,1 +1,2 @@
-# CAPSTONE PROJECT: StudentOS
+# Capstone Project: StudentOS
+## In Progress...
