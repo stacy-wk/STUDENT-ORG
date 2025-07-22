@@ -4,14 +4,14 @@ import { Server } from 'socket.io';
 
 const PORT = process.env.PORT || 5000;
 
-// HTTP server using the Express app
+// HTTP server using express
 const server = http.createServer(app);
 
-// Initialize Socket.io server
+// Init Socket.io server
 const io = new Server(server, {
   cors: {
-    origin: process.env.VITE_API_BASE_URL ? process.env.VITE_API_BASE_URL.replace('/api', '') : 'http://localhost:5173', // Adjust origin to match your client's URL
-    methods: ['GET', 'POST'], // Allowed HTTP methods for CORS
+    origin: process.env.VITE_API_BASE_URL ? process.env.VITE_API_BASE_URL.replace('/api', '') : 'http://localhost:5173',
+    methods: ['GET', 'POST'], // HTTP methods for CORS
   },
 });
 
@@ -33,9 +33,6 @@ io.on('connection', (socket) => {
     console.log(`User disconnected: ${socket.id}`);
   });
 
-  // TODO:
-  // socket.on('joinGroup', (groupId) => { ... });
-  // socket.on('sendMessage', (messageData) => { ... });
 });
 
 // Start the Server 
