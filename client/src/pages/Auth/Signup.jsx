@@ -1,9 +1,11 @@
-// client/src/pages/Auth/Signup.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { toast } from 'react-hot-toast'; // Ensure this import is correct
+import { toast } from 'react-hot-toast'; 
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 function Signup({ auth, db }) {
   const [email, setEmail] = useState('');
@@ -64,68 +66,55 @@ function Signup({ auth, db }) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-student-os-white p-4">
-      <div className="bg-white rounded-2xl shadow-custom-medium p-8 md:p-10 w-full max-w-md text-center">
-        <h2 className="text-3xl font-bold text-student-os-accent mb-6">Join StudentOS!</h2>
-        <p className="text-student-os-dark-gray mb-8">Create your account to get organized.</p>
-
-        <form onSubmit={handleSignup} className="space-y-6">
-          <div>
-            <input
-              type="email"
-              placeholder="Email Address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full p-3 border border-student-os-light-gray rounded-lg focus:ring-2 focus:ring-student-os-accent focus:border-transparent transition duration-200 text-student-os-dark-gray placeholder-student-os-light-gray"
-            />
-          </div>
-          <div>
-            <input
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-zinc-900 px-4">
+      <Card className="w-full max-w-md shadow-xl animate-fade">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl font-bold">StudentOS</CardTitle>
+          <p className="text-sm text-center text-zinc-600 dark:text-zinc-300 mt-4">Create your account to get started!</p>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+          <Input
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full p-3 border border-student-os-light-gray rounded-lg focus:ring-2 focus:ring-student-os-accent focus:border-transparent transition duration-200 text-student-os-dark-gray placeholder-student-os-light-gray"
-            />
-          </div>
-          <div>
-            <input
+          />
+          <Input
               type="password"
               placeholder="Password (min 6 characters)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full p-3 border border-student-os-light-gray rounded-lg focus:ring-2 focus:ring-student-os-accent focus:border-transparent transition duration-200 text-student-os-dark-gray placeholder-student-os-light-gray"
-            />
-          </div>
-          <div>
-            <input
+          />
+          <Input
               type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full p-3 border border-student-os-light-gray rounded-lg focus:ring-2 focus:ring-student-os-accent focus:border-transparent transition duration-200 text-student-os-dark-gray placeholder-student-os-light-gray"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3 bg-student-os-accent text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-student-os-accent focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? 'Signing Up...' : 'Sign Up'}
-          </button>
-        </form>
+          />
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button onClick={handleSignup} disabled={loading} className="w-full">
+            {loading ? "Signing up..." : "Sign Up"}
+          </Button>
+        </CardFooter>
 
-        <p className="mt-8 text-student-os-dark-gray">
-          Already have an account?{' '}
-          <Link to="/login" className="text-student-os-accent font-semibold hover:underline">
-            Login
-          </Link>
+        <p className="text-sm text-center text-zinc-600 dark:text-zinc-300 mt-4">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-600 hover:underline">
+                Log In
+            </Link>
         </p>
-      </div>
+      </Card>
     </div>
   );
 }
