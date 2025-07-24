@@ -1,7 +1,7 @@
 import { getDocumentsByQuery, addDocument, deleteDocument } from '../services/firestoreService.js';
 
 
-/* Fetches all calendar events for the authenticated user */
+// Fetch all calendar events
 const getEvents = async (req, res) => {
   try {
     // userId is available from authMiddleware
@@ -10,11 +10,10 @@ const getEvents = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: User ID not found in token.' });
     }
 
-    // Path: /users/{userId}/events
     const collectionPath = `users/${userId}/events`;
     console.log(`[Backend] Attempting to fetch events from: ${collectionPath}`);
     const events = await getDocumentsByQuery(collectionPath, []); 
-    console.log(`[Backend] Fetched events:`, events); // Log fetched events
+    console.log(`[Backend] Fetched events:`, events); 
     res.status(200).json(events);
   } catch (error) {
     console.error('Error fetching calendar events:', error);
@@ -22,7 +21,7 @@ const getEvents = async (req, res) => {
   }
 };
 
-/* Adds a new calendar event for authenticated user */
+// Add new calendar event
 const addEvent = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -48,7 +47,7 @@ const addEvent = async (req, res) => {
     const collectionPath = `users/${userId}/events`;
     console.log(`[Backend] Attempting to add event to: ${collectionPath} with data:`, eventData);
     const newEvent = await addDocument(collectionPath, eventData);
-    console.log(`[Backend] Successfully added event:`, newEvent); // Log new event with ID
+    console.log(`[Backend] Successfully added event:`, newEvent); 
     res.status(201).json(newEvent);
   } catch (error) {
     console.error('Error adding calendar event:', error);
@@ -56,11 +55,10 @@ const addEvent = async (req, res) => {
   }
 };
 
-/* Deletes a calendar event for the authenticated user */
+// Delete calendar event 
     const deleteEvent = async (req, res) => {
       try {
         const userId = req.user.uid;
-        // Ensure eventId is correctly extracted from req.params
         const { eventId } = req.params;
 
         if (!userId) {

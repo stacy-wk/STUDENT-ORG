@@ -1,42 +1,107 @@
-import app from './app.js';
-import http from 'http';
-import { Server } from 'socket.io';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import admin from 'firebase-admin';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const serviceAccountPath = path.resolve(__dirname, 'config', 'serviceAccountKey.json');
+let serviceAccount;
+try {
+  serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+} catch (error) {
+  console.error('Error loading Firebase service account key:', error.message);
+  console.error(`Please ensure ${path.basename(serviceAccountPath)} is in the server/config directory and is valid JSON.`);
+  process.exit(1);
+}
+
+import apiRoutes from './routes/index.js';
+import { authenticateToken } from './middleware/authMiddleware.js';
+
+import http from 'http';
+import { Server as SocketIOServer } from 'socket.io';
+
+import { saveMessage } from './controllers/chatController.js';
+
+
+dotenv.config();
+
+// Firebase Admin SDK only if it hasn't been initialized
+if (!admin.apps.length) { 
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+  console.log('Firebase Admin SDK initialized with service account.');
+} else {
+  console.log('Firebase Admin SDK already initialized.');
+}
+
+
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-// HTTP server using express
+// Middleware
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true
+}));
+app.use(express.json());
+
+app.use((req, res, next) => {
+  req.firebaseAdmin = admin;
+  next();
+});
+
+app.use('/api', authenticateToken, apiRoutes);
+
+
 const server = http.createServer(app);
 
-// Init Socket.io server
-const io = new Server(server, {
+const io = new SocketIOServer(server, {
   cors: {
-    origin: process.env.VITE_API_BASE_URL ? process.env.VITE_API_BASE_URL.replace('/api', '') : 'http://localhost:5173',
-    methods: ['GET', 'POST'], // HTTP methods for CORS
-  },
+    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    methods: ["GET", "POST"]
+  }
 });
 
-
-// Socket.io Event Handling
-
-// Listen for new Socket.io connections
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+  console.log(`[Socket.IO] User connected: ${socket.id}`);
 
-  // Listen for a 'testMessage' event from the client
-  socket.on('testMessage', (data) => {
-    console.log(`Received test message from ${socket.id}: ${data}`);
-    socket.emit('testResponse', `Server received: ${data}`);
+  socket.on('joinRoom', (roomId, userId) => {
+    socket.join(roomId);
+    console.log(`[Socket.IO] User ${userId} (${socket.id}) joined room: ${roomId}`);
   });
 
-  // Listen for disconnect event
+  socket.on('sendMessage', async ({ roomId, senderId, senderName, messageText }) => {
+    console.log(`[Socket.IO] Message received for room ${roomId} from ${senderName} (${senderId}): ${messageText}`);
+
+    if (!roomId || !senderId || !senderName || !messageText) {
+      console.error('[Socket.IO] Invalid message data received.');
+      return;
+    }
+
+    try {
+      const newMessage = await saveMessage(roomId, senderId, senderName, messageText);
+      console.log('[Socket.IO] Message saved to Firestore:', newMessage.id);
+
+      io.to(roomId).emit('message', newMessage);
+    } catch (error) {
+      console.error('[Socket.IO] Error saving or emitting message:', error);
+      socket.emit('messageError', { message: 'Failed to send message.', error: error.message });
+    }
+  });
+
   socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
+    console.log(`[Socket.IO] User disconnected: ${socket.id}`);
   });
-
 });
 
-// Start the Server 
+
 server.listen(PORT, () => {
-  console.log(`StudentOS Server running on port ${PORT}`);
-  console.log(`API available at http://localhost:${PORT}/api`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Client URL: ${process.env.CLIENT_URL}`);
 });

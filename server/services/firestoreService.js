@@ -1,7 +1,6 @@
 import { db } from '../config/firebaseAdmin.js';
 import admin from 'firebase-admin'; // Admin for serverTimestamp
 
-/* Firestore Service Module */
 
 // Basic CRUD Ops
 const getAllDocuments = async (collectionName) => {
@@ -113,7 +112,6 @@ const getDocumentsByQuery = async (collectionName, conditions) => {
   }
 };
 
-// Exported functions for c0ntrollers
 export {
   getAllDocuments,
   getDocumentById,

@@ -1,7 +1,7 @@
 import { getDocumentsByQuery, addDocument, updateDocument, deleteDocument } from '../services/firestoreService.js';
 
 
-/* Fetches all tasks for the authenticated user*/
+// Fetch all tasks
 const getTasks = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -9,7 +9,6 @@ const getTasks = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: User ID not found in token.' });
     }
 
-    // Path: /users/{userId}/tasks
     const collectionPath = `users/${userId}/tasks`;
     console.log(`[Backend] Attempting to fetch tasks from: ${collectionPath}`);
     const tasks = await getDocumentsByQuery(collectionPath, []); // Fetch all tasks for user
@@ -20,7 +19,7 @@ const getTasks = async (req, res) => {
   }
 };
 
-/* Adds a new task for the authenticated user */
+// Add new task
 const addTask = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -35,12 +34,12 @@ const addTask = async (req, res) => {
     }
 
     const taskData = {
-      userId, // Store userId for ownership
+      userId, 
       title,
       description: description || null,
       dueDate: dueDate || null, 
-      priority: priority || 'medium', // Default priority
-      completed: completed || false, // Default to not completed
+      priority: priority || 'medium', 
+      completed: completed || false, 
     };
 
     const collectionPath = `users/${userId}/tasks`;
@@ -53,7 +52,7 @@ const addTask = async (req, res) => {
   }
 };
 
-/* Updates existing task for authenticated user */
+// Update task
 const updateTask = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -80,14 +79,14 @@ const updateTask = async (req, res) => {
       return res.status(404).json({ message: 'Task not found after update.' });
     }
 
-    res.status(200).json(updatedTask[0]); // Return single updated task
+    res.status(200).json(updatedTask[0]); 
   } catch (error) {
     console.error('Error updating task:', error);
     res.status(500).json({ message: 'Failed to update task.', error: error.message });
   }
 };
 
-/* Deletes a task for the authenticated user */
+// Delete task
 const deleteTask = async (req, res) => {
   try {
     const userId = req.user.uid;
@@ -103,7 +102,7 @@ const deleteTask = async (req, res) => {
     const collectionPath = `users/${userId}/tasks`;
     console.log(`[Backend] Attempting to delete task ID: ${taskId} from: ${collectionPath}`);
     await deleteDocument(collectionPath, taskId);
-    res.status(204).send(); // 204 for successful deletion
+    res.status(204).send(); // successful deletion
   } catch (error) {
     console.error('Error deleting task:', error);
     res.status(500).json({ message: 'Failed to delete task.', error: error.message });
