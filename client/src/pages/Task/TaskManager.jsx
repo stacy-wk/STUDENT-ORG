@@ -4,7 +4,7 @@ import axios from 'axios';
 import { format, parseISO, isValid } from 'date-fns'; // isValid for robust date checking
 import { Plus, CheckSquare, Square, Trash2, Pencil } from 'lucide-react'; 
 
-/* Helper function to safely parse a date value from Firestore */
+
 const safeParseDate = (dateValue) => {
   if (!dateValue) {
     return null;
@@ -27,7 +27,7 @@ const safeParseDate = (dateValue) => {
 
 function TaskManager({ userId, auth }) {
   const [tasks, setTasks] = useState([]); 
-  const [filter, setFilter] = useState('all'); // 'all', 'todo', 'completed'
+  const [filter, setFilter] = useState('all'); 
   const [showAddTaskModal, setShowAddTaskModal] = useState(false);
   const [newTask, setNewTask] = useState({
     title: '',
@@ -66,7 +66,8 @@ function TaskManager({ userId, auth }) {
     fetchTasks();
   }, [userId, auth, API_BASE_URL]);
 
-  // Form Handlers
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (editingTask) {
@@ -196,9 +197,9 @@ function TaskManager({ userId, auth }) {
     }
     return true; 
   }).sort((a, b) => {
-    // Sort by completion status, then by due date
+    // Sort by completion status
     if (a.completed !== b.completed) {
-      return a.completed ? 1 : -1; // Completed tasks go to the end
+      return a.completed ? 1 : -1; 
     }
     // Sort by due date
     const dateA = safeParseDate(a.dueDate); 
@@ -212,7 +213,7 @@ function TaskManager({ userId, auth }) {
     return 0; 
   });
 
-  // Render Functions
+  // Render Ftns
   const renderTaskForm = (isEditing) => {
     const data = isEditing ? editingTask : newTask;
     const submitHandler = isEditing ? handleUpdateTask : handleAddTask;
@@ -302,7 +303,7 @@ function TaskManager({ userId, auth }) {
               setEditingTask(null); 
               setShowAddTaskModal(true);
             }}
-            className="px-4 py-2 rounded-lg bg-student-os-accent text-white flex items-center space-x-2 hover:bg-student-os-accent/90 transition-colors shadow-sm"
+            className="px-4 py-2 rounded-lg bg-student-os-accent text-black flex items-center space-x-2 hover:bg-student-os-accent/90 transition-colors shadow-sm"
           >
             <Plus size={20} />
             <span>Add Task</span>
@@ -314,21 +315,21 @@ function TaskManager({ userId, auth }) {
           <button
             onClick={() => setFilter('all')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors
-              ${filter === 'all' ? 'bg-student-os-accent text-white shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
+              ${filter === 'all' ? 'bg-student-os-accent text-black shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
           >
             All
           </button>
           <button
             onClick={() => setFilter('todo')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors
-              ${filter === 'todo' ? 'bg-student-os-accent text-white shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
+              ${filter === 'todo' ? 'bg-student-os-accent text-black shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
           >
             To-Do
           </button>
           <button
             onClick={() => setFilter('completed')}
             className={`px-4 py-2 rounded-lg font-medium transition-colors
-              ${filter === 'completed' ? 'bg-student-os-accent text-white shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
+              ${filter === 'completed' ? 'bg-student-os-accent text-black shadow-md' : 'bg-white text-student-os-dark-gray hover:bg-student-os-light-gray'}`}
           >
             Completed
           </button>
@@ -381,7 +382,7 @@ function TaskManager({ userId, auth }) {
                   </p>
                 )}
 
-                {/* Task Priority and Actions */}
+                {/* Task Priority */}
                 <div className="flex justify-between items-center text-sm text-student-os-light-gray">
                   <span className={`font-medium px-2 py-1 rounded-full
                     ${task.priority === 'low' ? 'bg-blue-100 text-blue-700' :

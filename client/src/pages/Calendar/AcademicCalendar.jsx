@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, startOfDay } from 'date-fns';
-import { ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'; // Import Trash2 icon
+import { ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'; 
 
 
 function AcademicCalendar({ userId, auth }) {
@@ -20,7 +20,6 @@ function AcademicCalendar({ userId, auth }) {
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
-  // Event Fetching
   useEffect(() => {
     const fetchEvents = async () => {
       if (!userId || !auth) return; 
@@ -44,7 +43,7 @@ function AcademicCalendar({ userId, auth }) {
     fetchEvents();
   }, [userId, auth, API_BASE_URL]); // Re-fetch when userId or auth changes
 
-  // Calendar Grid Generation
+  // Calendar Grid
   const daysInMonth = eachDayOfInterval({
     start: startOfMonth(currentMonth),
     end: endOfMonth(currentMonth),
@@ -83,7 +82,7 @@ function AcademicCalendar({ userId, auth }) {
           Authorization: `Bearer ${idToken}`,
         },
       });
-      setEvents(prev => [...prev, response.data]); // Add new event to state
+      setEvents(prev => [...prev, response.data]); 
       toast.success('Event added successfully!');
       setShowAddEventModal(false); // Close modal
       setNewEvent({
@@ -101,7 +100,7 @@ function AcademicCalendar({ userId, auth }) {
   };
 
   const handleDeleteEvent = (event) => {
-    setEventToDelete(event); // Store the event to be deleted
+    setEventToDelete(event); // Store event to be deleted
     setShowConfirmDeleteModal(true);
   };
 
@@ -119,7 +118,7 @@ function AcademicCalendar({ userId, auth }) {
           Authorization: `Bearer ${idToken}`,
         },
       });
-      // Remove the event from client-side state
+      // Remove event from client-side state
       setEvents(prev => prev.filter(event => event.id !== eventToDelete.id));
       toast.success('Event deleted successfully!');
       setShowConfirmDeleteModal(false); 
@@ -130,7 +129,7 @@ function AcademicCalendar({ userId, auth }) {
     }
   };
 
-  // Navigation for Months
+  // Nav for Months
   const goToPreviousMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
@@ -139,7 +138,6 @@ function AcademicCalendar({ userId, auth }) {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  // events and calendar days for debugging
   useEffect(() => {
     console.log('[Client Debug] Current events in state:', events);
     console.log('[Client Debug] Calendar days generated:', calendarDays.filter(Boolean).map(d => format(d, 'yyyy-MM-dd')));
@@ -149,9 +147,6 @@ function AcademicCalendar({ userId, auth }) {
   return (
     <div className="flex-grow p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-xl md:text-3xl font-bold mb-6 text-student-os-dark-gray">
-          Academic Calendar
-        </h2>
 
         {/* Calendar Nav */}
         <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-custom-light">
@@ -176,7 +171,6 @@ function AcademicCalendar({ userId, auth }) {
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-1 bg-white rounded-xl shadow-custom-medium p-4">
-          {/* Weekday Headers */}
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
             <div key={day} className="text-center font-semibold text-student-os-accent py-2 border-b border-student-os-light-gray">
               {day}
@@ -230,11 +224,11 @@ function AcademicCalendar({ userId, auth }) {
           ))}
         </div>
 
-        {/* Add Event Button */}
+        {/* Add Event Btn */}
         <div className="mt-8 text-center">
           <button
             onClick={() => setShowAddEventModal(true)}
-            className="px-6 py-3 rounded-xl bg-student-os-accent text-white text-lg font-semibold hover:bg-student-os-accent/90 transition-colors shadow-lg"
+            className="px-6 py-3 rounded-xl bg-student-os-accent text-black text-lg font-semibold hover:bg-student-os-accent/90 transition-colors shadow-lg"
           >
             + Add New Event
           </button>
@@ -244,7 +238,6 @@ function AcademicCalendar({ userId, auth }) {
         {showAddEventModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl shadow-custom-medium p-6 w-full max-w-md">
-              <h3 className="text-2xl font-bold mb-6 text-student-os-accent">Add New Event</h3>
               <form onSubmit={handleAddEvent} className="space-y-4">
                 <div>
                   <label htmlFor="title" className="block text-sm font-medium text-student-os-dark-gray mb-1">Title</label>
@@ -317,7 +310,7 @@ function AcademicCalendar({ userId, auth }) {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-lg bg-student-os-accent text-white hover:bg-student-os-accent/90 transition-colors shadow-md"
+                    className="px-5 py-2 rounded-lg bg-student-os-accent text-black hover:bg-student-os-accent/90 transition-colors shadow-md"
                   >
                     Add Event
                   </button>
@@ -331,7 +324,7 @@ function AcademicCalendar({ userId, auth }) {
         {showConfirmDeleteModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-xl shadow-custom-medium p-6 w-full max-w-sm text-center">
-              <h3 className="text-xl font-bold mb-4 text-student-os-dark-gray">Confirm Deletion</h3>
+          
               <p className="mb-6 text-student-os-dark-gray">
                 Are you sure you want to delete the event: <span className="font-semibold">"{eventToDelete?.title}"</span>?
               </p>

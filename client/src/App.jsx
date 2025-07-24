@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, onIdTokenChanged } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
@@ -12,8 +12,13 @@ import Signup from './pages/Auth/Signup.jsx';
 import MainLayout from './components/Layout/MainLayout.jsx';
 import AcademicCalendar from './pages/Calendar/AcademicCalendar.jsx';
 import TaskManager from './pages/Task/TaskManager.jsx';
+import Chat from './pages/Chat/Chat.jsx';
+import MentalHealth from './pages/MentalHealth/MentalHealth.jsx';
+import FinanceTracker from './pages/Finance/FinanceTracker.jsx';
+import RemindersPage from './pages/Reminders/RemindersPage.jsx';
+import Dashboard from './pages/Dashboard/Dashboard.jsx';
 
-// Main app
+
 function App() {
   const [db, setDb] = useState(null);
   const [auth, setAuth] = useState(null);
@@ -22,11 +27,18 @@ function App() {
   const [loadingFirebase, setLoadingFirebase] = useState(true);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [isAuthReady, setIsAuthReady] = useState(false);
+  const [isAxiosAuthReady, setIsAxiosAuthReady] = useState(false);
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
-  // Firebase Init and AuthN
+
+  console.log('App Render');
+  console.log(`loadingFirebase: ${loadingFirebase}, isAuthReady: ${isAuthReady}, userId: ${userId}, loadingProfile: ${loadingProfile}, isAxiosAuthReady: ${isAxiosAuthReady}`);
+
+
   useEffect(() => {
+    console.log('App useEffect: Firebase Init/Auth Listener running...');
     const initializeFirebase = async () => {
       try {
         const localFirebaseConfig = {
@@ -50,7 +62,7 @@ function App() {
         setDb(firestoreDb);
         setAuth(firebaseAuth);
 
-        const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
+        const unsubscribeAuth = onAuthStateChanged(firebaseAuth, (user) => {
           if (user) {
             setUserId(user.uid);
             console.log('Firebase user signed in:', user.uid);
@@ -60,9 +72,34 @@ function App() {
           }
           setIsAuthReady(true);
           setLoadingFirebase(false);
+          console.log(`onAuthStateChanged: isAuthReady set to true, userId: ${user?.uid || 'null'}`);
         });
 
-        return () => unsubscribe();
+        const unsubscribeToken = onIdTokenChanged(firebaseAuth, async (user) => {
+          if (user) {
+            try {
+              const idToken = await user.getIdToken();
+              axios.defaults.headers.common['Authorization'] = `Bearer ${idToken}`;
+              console.log('Axios default Authorization header updated with fresh ID token.');
+              setIsAxiosAuthReady(true);
+              console.log('onIdTokenChanged: isAxiosAuthReady set to true (user present).');
+            } catch (error) {
+              console.error('Error getting fresh ID token:', error);
+              setIsAxiosAuthReady(false);
+              console.log('onIdTokenChanged: isAxiosAuthReady set to false (token error).');
+            }
+          } else {
+            delete axios.defaults.headers.common['Authorization'];
+            console.log('Axios default Authorization header cleared.');
+            setIsAxiosAuthReady(true); 
+            console.log('onIdTokenChanged: isAxiosAuthReady set to true (no user).');
+          }
+        });
+
+        return () => {
+          unsubscribeAuth();
+          unsubscribeToken();
+        };
       } catch (error) {
             console.error("Failed to initialize Firebase:", error);
             if (error.code === 'app/no-app' || error.message.includes('No Firebase App instance has been provided')) {
@@ -71,50 +108,56 @@ function App() {
                 toast.error('Failed to initialize application.');
             }
             setLoadingFirebase(false);
+            setIsAuthReady(true); 
+            setIsAxiosAuthReady(true); 
       }
     };
 
     initializeFirebase();
   }, []);
 
-  // Fetch user profile once userId and auth are acquired
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (isAuthReady && userId && auth) {
-        setLoadingProfile(true);
-        try {
-          const idToken = await auth.currentUser.getIdToken();
-          console.log('Firebase ID Token obtained:', idToken.substring(0, 20) + '...');
+    console.log('App useEffect: Fetch User Profile running...');
+    console.log(`  Conditions: isAuthReady=${isAuthReady}, userId=${userId}, auth=${!!auth}, isAxiosAuthReady=${isAxiosAuthReady}`);
 
-          const response = await axios.get(`${API_BASE_URL}/auth/profile`, {
-            headers: {
-              Authorization: `Bearer ${idToken}`,
-            },
-          });
+    const fetchUserProfile = async () => {
+      if (isAuthReady && userId && auth && isAxiosAuthReady) {
+        setLoadingProfile(true);
+        console.log('  Attempting to fetch user profile...');
+        try {
+          const response = await axios.get(`${API_BASE_URL}/api/auth/profile`);
 
           setUserProfile(response.data);
-          toast.success('User profile loaded!');
-          console.log('User Profile:', response.data);
+          console.log('  User Profile fetched successfully:', response.data);
         } catch (error) {
-          console.error('Error fetching user profile:', error);
-          toast.error('Failed to load user profile.');
+          console.error('  Error fetching user profile:', error);
+          if (error.response && error.response.status === 404) {
+            console.log('  Profile not found (expected for new users or initial load), not showing error toast.');
+          } else {
+            toast.error('Failed to load user profile.');
+          }
           if (error.response && error.response.status === 401) {
-            console.error('Authentication required or token expired. Redirecting to login.');
+            console.error('  Authentication required or token expired. Redirecting to login.');
             setUserId(null);
             setUserProfile(null);
           }
         } finally {
           setLoadingProfile(false);
+          console.log('  setLoadingProfile(false) called.');
         }
-      } else if (isAuthReady && !userId) {
+      } else if (isAuthReady && !userId && isAxiosAuthReady) {
+        console.log('  No user logged in, setting loadingProfile to false.');
         setLoadingProfile(false);
+      } else {
+        console.log('  Conditions for fetching user profile not met yet.');
       }
     };
 
     fetchUserProfile();
-  }, [userId, auth, API_BASE_URL, isAuthReady]);
+  }, [userId, auth, API_BASE_URL, isAuthReady, isAxiosAuthReady]);
 
-  if (loadingFirebase || (isAuthReady && userId && loadingProfile)) {
+  if (loadingFirebase || (isAuthReady && userId && loadingProfile) || !isAxiosAuthReady) {
+    console.log('App Render: Showing loading screen.');
     return (
       <div className="flex items-center justify-center min-h-screen bg-student-os-white text-student-os-dark-gray">
         <p className="text-lg font-inter">
@@ -124,48 +167,19 @@ function App() {
     );
   }
 
+  console.log('App Render: All loading conditions met, rendering main content.');
   return (
     <Router>
       <Routes>
-        {/* Login and Signup */}
         <Route path="/login" element={<Login auth={auth} />} />
         <Route path="/signup" element={<Signup auth={auth} db={db} />} />
 
-        {/* Routes in MainLayout */}
         <Route
           path="/dashboard"
           element={
             isAuthReady && userId ? (
               <MainLayout auth={auth} userId={userId} userProfile={userProfile}>
-                {/* Dashboard */}
-                <div className="p-4 md:p-8 flex-grow">
-                  <div className="max-w-7xl mx-auto">
-                    <h2 className="text-xl md:text-3xl font-bold mb-6 text-student-os-dark-gray">
-                      Welcome to your StudentOS Dashboard!
-                    </h2>
-                    <p className="text-lg mb-4">
-                      This is where your classes, assignments, and more will be organized.
-                    </p>
-                    <div className="bg-white rounded-xl p-6 shadow-custom-medium mt-8">
-                      <h3 className="text-xl font-semibold mb-4 text-student-os-accent">
-                        Your Profile
-                      </h3>
-                      {userProfile ? (
-                        <div className="space-y-2 text-student-os-dark-gray">
-                          <p><strong>ID:</strong> {userProfile.id}</p>
-                          <p><strong>Email:</strong> {userProfile.email || 'N/A'}</p>
-                          <p><strong>Username:</strong> {userProfile.username || 'N/A'}</p>
-                          <p><strong>Created At:</strong> {userProfile.createdAt ? new Date(userProfile.createdAt._seconds * 1000).toLocaleString() : 'N/A'}</p>
-                          <p><strong>Last Updated:</strong> {userProfile.updatedAt ? new Date(userProfile.updatedAt._seconds * 1000).toLocaleString() : 'N/A'}</p>
-                          {userProfile.name && <p><strong>Name:</strong> {userProfile.name}</p>}
-                          {userProfile.university && <p><strong>University:</strong> {userProfile.university}</p>}
-                        </div>
-                      ) : (
-                        <p className="text-student-os-light-gray">No profile data loaded yet.</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <Dashboard userId={userId} userProfile={userProfile} isAxiosAuthReady={isAxiosAuthReady} />
               </MainLayout>
             ) : (
               <Navigate to="/login" replace />
@@ -173,7 +187,6 @@ function App() {
           }
         />
 
-        {/* Academic Calendar */}
         <Route
           path="/calendar"
           element={
@@ -187,7 +200,6 @@ function App() {
           }
         />
 
-        {/* Task Manager */}
         <Route
           path="/tasks"
           element={
@@ -201,7 +213,58 @@ function App() {
           }
         />
 
-        {/* Redirect to dashboard if logged in, login if not */}
+        <Route
+          path="/chat"
+          element={
+            isAuthReady && userId ? (
+              <MainLayout auth={auth} userId={userId} userProfile={userProfile}>
+                <Chat userId={userId} userProfile={userProfile} auth={auth} isAxiosAuthReady={isAxiosAuthReady} />
+              </MainLayout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/mental-health"
+          element={
+            isAuthReady && userId ? (
+              <MainLayout auth={auth} userId={userId} userProfile={userProfile}>
+                <MentalHealth userId={userId} userProfile={userProfile} auth={auth} isAxiosAuthReady={isAxiosAuthReady} />
+              </MainLayout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/finance"
+          element={
+            isAuthReady && userId ? (
+              <MainLayout auth={auth} userId={userId} userProfile={userProfile}>
+                <FinanceTracker userId={userId} userProfile={userProfile} isAxiosAuthReady={isAxiosAuthReady} />
+              </MainLayout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/reminders"
+          element={
+            isAuthReady && userId ? (
+              <MainLayout auth={auth} userId={userId} userProfile={userProfile}>
+                <RemindersPage userId={userId} userProfile={userProfile} isAxiosAuthReady={isAxiosAuthReady} />
+              </MainLayout>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
         <Route
           path="/"
           element={
@@ -212,7 +275,6 @@ function App() {
             )
           }
         />
-
       </Routes>
     </Router>
   );
