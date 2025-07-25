@@ -1,34 +1,33 @@
 import admin from 'firebase-admin';
 import dotenv from 'dotenv';
-import { readFileSync } from 'fs'; 
-import { resolve } from 'path';     
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 
 
 dotenv.config({ path: resolve(process.cwd(), '..', '.env') });
 
-let serviceAccount;
+let serviceAccountCredentials; 
 
 
 if (process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON) {
   try {
-    serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+    serviceAccountCredentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
     console.log("Firebase Admin SDK: Loaded credentials from GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable.");
   } catch (e) {
     console.error("Error parsing GOOGLE_APPLICATION_CREDENTIALS_JSON:", e);
-    throw new Error("Invalid GOOGLE_APPLICATION_CREDENTIALS_JSON format.");
+    throw new Error("Invalid GOOGLE_APPLICATION_CREDENTIALS_JSON format. Please ensure it's valid JSON.");
   }
 }
 
 else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
-  
   const serviceAccountPath = resolve(process.cwd(), process.env.GOOGLE_APPLICATION_CREDENTIALS);
   try {
     const fileContent = readFileSync(serviceAccountPath, 'utf8');
-    serviceAccount = JSON.parse(fileContent);
+    serviceAccountCredentials = JSON.parse(fileContent);
     console.log(`Firebase Admin SDK: Loaded credentials from local file: ${serviceAccountPath}`);
   } catch (e) {
     console.error(`Error loading service account key from file ${serviceAccountPath}:`, e);
-    throw new Error(`Failed to load Firebase service account key from file: ${serviceAccountPath}`);
+    throw new Error(`Failed to load Firebase service account key from file: ${serviceAccountPath}. Please ensure the file exists and is valid JSON.`);
   }
 }
 
@@ -45,7 +44,7 @@ if (!firebaseProjectId) {
 
 if (!admin.apps.length) {
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(serviceAccountCredentials), 
     projectId: firebaseProjectId,
   });
 
