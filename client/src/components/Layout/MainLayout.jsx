@@ -69,7 +69,7 @@ function MainLayout({ children, auth, userId, userProfile }) {
           </button>
 
           {/* Title for mobile */}
-          <h1 className="text-2xl font-bold text-student-os-accent md:hidden">StudentOS</h1>
+          <h1 className="text-2xl font-bold text-student-os-accent md:hidden">StudentOrg</h1>
 
           {/* Pushes avatar to right */}
           <div className="hidden md:flex flex-grow"></div> 

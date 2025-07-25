@@ -31,7 +31,7 @@ function Sidebar({ isOpen, toggleSidebar }) {
       <div className="p-6 flex flex-col h-full relative z-50"> 
         <div className="flex items-center justify-between mb-8">
           <Link className="flex items-center space-x-2">
-            <h1 className="text-3xl font-bold text-student-os-accent">StudentOS</h1>
+            <h1 className="text-3xl font-bold text-student-os-accent">StudentOrg</h1>
           </Link>
         </div>
 

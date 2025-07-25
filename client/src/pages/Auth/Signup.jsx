@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { toast } from 'react-hot-toast'; 
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from 'react-hot-toast';
+import { Input } from "../../components/ui/input";
+import { Button } from "../../components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
 
 function Signup({ auth, db }) {
   const [email, setEmail] = useState('');
@@ -13,12 +13,12 @@ function Signup({ auth, db }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    toast.dismiss(); // Dismiss any currently visible toasts
+    toast.dismiss(); 
 
     if (password !== confirmPassword) {
       toast.error('Passwords do not match.');
@@ -36,16 +36,17 @@ function Signup({ auth, db }) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      const userDocRef = doc(db, 'users', user.uid);
-      await setDoc(userDocRef, {
+      const appId = typeof __app_id !== 'undefined' ? __app_id : import.meta.env.VITE_FIREBASE_PROJECT_ID;
+      const userProfileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', user.uid);
+
+      await setDoc(userProfileRef, {
         email: user.email,
         username: username,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
       });
 
-      toast.success('Account created successfully! You are now logged in.');
-      navigate('/dashboard');
+      toast.success('Account created successfully! Loading your dashboard...');
     } catch (error) {
       console.error('Signup error:', error);
       let errorMessage = 'Signup failed. Please try again.';
@@ -56,7 +57,6 @@ function Signup({ auth, db }) {
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'Please enter a valid email address.';
       } else {
-        // Fallback for unhandled errors
         errorMessage = `Signup failed: ${error.message || 'Unknown error'}`;
       }
       toast.error(errorMessage);
@@ -69,7 +69,7 @@ function Signup({ auth, db }) {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-zinc-900 px-4">
       <Card className="w-full max-w-md shadow-xl animate-fade">
         <CardHeader>
-          <CardTitle className="text-center text-2xl font-bold">StudentOS</CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">StudentOrg</CardTitle>
           <p className="text-sm text-center text-zinc-600 dark:text-zinc-300 mt-4">Create your account to get started!</p>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -81,25 +81,25 @@ function Signup({ auth, db }) {
             required
           />
           <Input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
           <Input
-              type="password"
-              placeholder="Password (min 6 characters)"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+            type="password"
+            placeholder="Password (min 6 characters)"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <Input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
           />
         </CardContent>
         <CardFooter className="flex justify-between">
@@ -111,7 +111,7 @@ function Signup({ auth, db }) {
         <p className="text-sm text-center text-zinc-600 dark:text-zinc-300 mt-4">
             Already have an account?{' '}
             <Link to="/login" className="text-blue-600 hover:underline">
-                Log In
+              Log In
             </Link>
         </p>
       </Card>
