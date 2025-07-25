@@ -146,7 +146,7 @@ function AppContent({ auth, db }) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-student-os-white text-student-os-dark-gray">
         <p className="text-lg font-inter">
-          {loadingFirebase ? 'Initializing StudentOS...' : 'Loading user profile...'}
+          {loadingFirebase ? 'Initializing StudentOrg...' : 'Loading user profile...'}
         </p>
       </div>
     );
