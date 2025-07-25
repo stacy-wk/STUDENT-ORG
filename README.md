@@ -51,33 +51,31 @@ Watch a 5-10 minute video demonstration showcasing the key features and user flo
 Here are some screenshots highlighting key features of StudentOrg:
 
 ### Dashboard
-![Dashboard Screenshot](./assets/screenshots/dashboard.jpg)
+![Dashboard Screenshot](./screenshots/dashboard.jpg)
 *A personalized overview of your day, showing upcoming events, tasks, and a mood check-in.*
 
 ### Academic Calendar
-![Academic Calendar Screenshot](./assets/screenshots/calendar.jpg)
+![Academic Calendar Screenshot](./screenshots/calendar.jpg)
 *Visualize your academic deadlines and personal events.*
 
 ### Mental Health Tracker
-![Mental Health Tracker Screenshot](./assets/screenshots/mental-health1.jpg)
-![Mental Health Tracker Screenshot](./assets/screenshots/mental-health2.jpg)
-![Mental Health Tracker Screenshot](./assets/screenshots/mental-health3.jpg)
+![Mental Health Tracker Screenshot](./screenshots/mental-health1.jpg)
 *Log your mood, write journal entries, and access wellness resources.*
 
 ### Reminders
-![Reminders Screenshot](./assets/screenshots/reminders.jpg)
+![Reminders Screenshot](./screenshots/reminders.jpg)
 *Set timely personal reminders.*
 
 ### Chat Groups
-![Chat Groups Screenshot](./assets/screenshots/chat-groups.jpg)
+![Chat Groups Screenshot](./screenshots/chat-groups.jpg)
 *Communicate and collaborate with fellow students on group projects and group assignments.*
 
 ### Finance Tracker
-![Finance Tracker Screenshot](./assets/screenshots/finance-tracker.jpg)
+![Finance Tracker Screenshot](./screenshots/finance-tracker.jpg)
 *Track your income and expenses to manage your budget effectively.*
 
 ### Task Manager
-![Task Manager Screenshot](./assets/screenshots/tasks.jpg)
+![Task Manager Screenshot](./screenshots/tasks.jpg)
 *Keep track of all your academic and personal tasks.*
 
 ## 6. Technologies Used
