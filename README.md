@@ -38,13 +38,13 @@ The application aims to reduce student stress and improve productivity by offeri
 
 Experience StudentOrg live!
 
-**Frontend URL:** [YOUR_DEPLOYED_FRONTEND_URL]
+**Frontend URL:** [/]
 
 ## 4. Video Demonstration
 
 Watch a 5-10 minute video demonstration showcasing the key features and user flows of StudentOrg:
 
-[YOUR_VIDEO_DEMO_LINK]
+[/]
 
 ## 5. Screenshots
 
