@@ -51,31 +51,33 @@ Watch a 5-10 minute video demonstration showcasing the key features and user flo
 Here are some screenshots highlighting key features of StudentOrg:
 
 ### Dashboard
-![Dashboard Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Dashboard+Screenshot)
+![Dashboard Screenshot](./assets/screenshots/dashboard.jpg)
 *A personalized overview of your day, showing upcoming events, tasks, and a mood check-in.*
 
 ### Academic Calendar
-![Academic Calendar Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Calendar+Screenshot)
+![Academic Calendar Screenshot](./assets/screenshots/calendar.jpg)
 *Visualize your academic deadlines and personal events.*
 
 ### Mental Health Tracker
-![Mental Health Tracker Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Mental+Health+Screenshot)
+![Mental Health Tracker Screenshot](./assets/screenshots/mental-health1.jpg)
+![Mental Health Tracker Screenshot](./assets/screenshots/mental-health2.jpg)
+![Mental Health Tracker Screenshot](./assets/screenshots/mental-health3.jpg)
 *Log your mood, write journal entries, and access wellness resources.*
 
 ### Reminders
-![Reminders Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Calendar+Screenshot)
+![Reminders Screenshot](./assets/screenshots/reminders.jpg)
 *Set timely personal reminders.*
 
 ### Chat Groups
-![Chat Groups Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Calendar+Screenshot)
+![Chat Groups Screenshot](./assets/screenshots/chat-groups.jpg)
 *Communicate and collaborate with fellow students on group projects and group assignments.*
 
 ### Finance Tracker
-![Finance Tracker Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Finance+Screenshot)
+![Finance Tracker Screenshot](./assets/screenshots/finance-tracker.jpg)
 *Track your income and expenses to manage your budget effectively.*
 
 ### Task Manager
-![Task Manager Screenshot](https://placehold.co/800x450/A0AEC0/FFFFFF?text=Tasks+Screenshot)
+![Task Manager Screenshot](./assets/screenshots/tasks.jpg)
 *Keep track of all your academic and personal tasks.*
 
 ## 6. Technologies Used
