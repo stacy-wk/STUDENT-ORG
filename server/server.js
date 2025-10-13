@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import admin from 'firebase-admin';
+import admin from './config/firebaseAdmin.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -9,15 +9,15 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const serviceAccountPath = path.resolve(__dirname, 'config', 'serviceAccountKey.json');
-let serviceAccount;
-try {
-  serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-} catch (error) {
-  console.error('Error loading Firebase service account key:', error.message);
-  console.error(`Please ensure ${path.basename(serviceAccountPath)} is in the server/config directory and is valid JSON.`);
-  process.exit(1);
-}
+// const serviceAccountPath = path.resolve(__dirname, 'config', 'serviceAccountKey.json');
+// let serviceAccount;
+// try {
+//   serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
+// } catch (error) {
+//   console.error('Error loading Firebase service account key:', error.message);
+//   console.error(`Please ensure ${path.basename(serviceAccountPath)} is in the server/config directory and is valid JSON.`);
+//   process.exit(1);
+// }
 
 import apiRoutes from './routes/index.js';
 import { authenticateToken } from './middleware/authMiddleware.js';
@@ -31,14 +31,14 @@ import { saveMessage } from './controllers/chatController.js';
 dotenv.config();
 
 // Firebase Admin SDK only if it hasn't been initialized
-if (!admin.apps.length) { 
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
-  console.log('Firebase Admin SDK initialized with service account.');
-} else {
-  console.log('Firebase Admin SDK already initialized.');
-}
+// if (!admin.apps.length) { 
+//   admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount)
+//   });
+//   console.log('Firebase Admin SDK initialized with service account.');
+// } else {
+//   console.log('Firebase Admin SDK already initialized.');
+// }
 
 
 const app = express();
