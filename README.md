@@ -267,3 +267,7 @@ Here are some screenshots highlighting key features of StudentOrg:
     * Deploy `/client` as a Render Static Site.
     * Set `pnpm install && pnpm run build` as the build command and `dist` as the publish directory.
     * Set environment variables for `VITE_API_BASE_URL` and `VITE_FIREBASE_...` client configuration variables.
+
+
+## Built with love by [Stacy Kamau](https://github.com/stacy-wk)
+## Empowering students to stay organized, connected, and mentally healthy.
