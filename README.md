@@ -62,7 +62,7 @@ StudentOrg follows a modular full-stack architecture:
 
 Experience StudentOrg live!
 
-**Frontend:** [https://student-org-frontend.onrender.com](https://student-org-frontend.onrender.com)  
+**Frontend:** [https://student-org-app.vercel.app](https://student-org-app.vercel.app)  
 **Backend:** [https://student-org-1.onrender.com](https://student-org-1.onrender.com)
 
 ---
