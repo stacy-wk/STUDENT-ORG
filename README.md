@@ -1,142 +1,172 @@
-# StudentOrg: Your All-in-One Academic Companion
+# 🎓 StudentOrg — Your All-in-One Academic Companion
 
-## Table of Contents
+> A full-stack academic productivity platform designed to help students organize, connect, and thrive.
+
+---
+
+## 📖 Table of Contents
 1.  [Project Description](#project-description)
 2.  [Features](#features)
-3.  [Deployed Application](#deployed-application)
-4.  [Video Demonstration](#video-demonstration)
-5.  [Screenshots](#screenshots)
-6.  [Technologies Used](#technologies-used)
-7.  [Setup and Installation](#setup-and-installation)
+3.  [System Architecture](#system-architecture)
+4.  [Deployed Application](#deployed-application)
+5.  [Video Demonstration](#video-demonstration)
+6.  [Screenshots](#screenshots)
+7.  [Technologies Used](#technologies-used)
+8.  [Setup and Installation](#setup-and-installation)
     * [Prerequisites](#prerequisites)
     * [Firebase Project Setup](#firebase-project-setup)
     * [Backend Setup](#backend-setup)
     * [Frontend Setup](#frontend-setup)
-8.  [Running the Application Locally](#running-the-application-locally)
-9.  [Testing](#testing)
-10. [Deployment (Render)](#deployment-render)
+9.  [Running the Application Locally](#running-the-application-locally)
+10.  [Testing](#testing)
+11. [Deployment (Render)](#deployment-render)
 
+---
 
-## 1. Project Description
+## 1. 🧩 Project Description
 
-StudentOrg is a comprehensive, full-stack web application designed to empower students by centralizing their academic, personal, and financial management. Built with the MERN stack (MongoDB/Firebase, Express.js, React, Node.js) and leveraging Google Cloud Firestore for data persistence, StudentOrg provides a seamless and intuitive platform to organize tasks, track academic progress, manage finances, prioritize mental well-being, and connect with peers.
+**StudentOrg** is a comprehensive, full-stack web application designed to empower students by centralizing their academic, personal, and financial management.  
 
-The application aims to reduce student stress and improve productivity by offering an integrated suite of tools, making it easier to navigate the complexities of student life.
+Built with the **MERN stack** (Firebase, Express.js, React, Node.js) and leveraging **Google Cloud Firestore**, it provides a seamless platform to organize tasks, track academic progress, manage finances, maintain mental well-being, and connect with peers.
 
-## 2. Features
+The goal: reduce student stress and improve productivity through an integrated suite of tools for student life.
+
+---
+
+## 2. ✨ Features
 
 * **User Authentication:** Secure signup and login powered by Firebase Authentication.
-* **Personalized Dashboard:** A quick overview of upcoming events, tasks, and reminders, with a daily mood check-in.
-* **Academic Calendar:** Manage academic events, deadlines, and personal appointments with a clear calendar view.
-* **Task Manager:** Create, track, and prioritize academic assignments, projects, and personal to-do lists. Mark tasks as complete.
-* **Chat Groups:** Facilitate communication and collaboration among students through real-time chat rooms.
-* **Mental Health Tracker:** Log daily moods, maintain a personal journal, and access curated mental wellness resources (with a focus on Kenya-specific support).
-* **Finance Tracker:** Monitor income and expenses, categorize transactions, and gain insights into spending habits.
-* **Reminders:** Set timely personal reminders for important activities, meetings, or deadlines.
+* **Personalized Dashboard:** Overview of upcoming events, tasks, and reminders, and mood tracking.
+* **Academic Calendar:** Manage academic events and deadlines with an intuitive calendar.
+* **Task Manager:** Track, prioritize and complete academic and personal tasks.
+* **Chat Groups:** Real-time group chats for collaboration and peer communication.
+* **Mental Health Tracker:** Log moods, write journals, and access curated wellness resources (with a focus on Kenya-specific support).
+* **Finance Tracker:** Track income and expenses, categorize transactions, and gain insights.
+* **Reminders:** Create personalized reminders for important tasks and events.
 
-## 3. Deployed Application
+---
+
+## 3. 🏗 System Architecture
+
+StudentOrg follows a modular full-stack architecture:
+
+- **Frontend (React + Vite):** Handles UI, routing, and API interactions.  
+- **Backend (Node.js + Express):** Exposes REST APIs and WebSocket endpoints.  
+- **Database (Firestore):** Stores user data, messages, and app content.  
+- **Authentication (Firebase Auth):** Secures users and manages sessions.  
+- **Deployment:** Hosted on **Render** (backend and frontend).
+
+---
+
+## 4. 🌍 Deployed Application
 
 Experience StudentOrg live!
 
-**Frontend URL:** [/]
+**Frontend:** [https://student-org-frontend.onrender.com](https://student-org-frontend.onrender.com)  
+**Backend:** [https://student-org-1.onrender.com](https://student-org-1.onrender.com)
 
-## 4. Video Demonstration
+---
 
-Watch a 5-10 minute video demonstration showcasing the key features and user flows of StudentOrg:
+## 5. 🎥 Video Demonstration
+
+Watch a video demonstration showcasing the key features and user flows of StudentOrg:
 
 [/]
 
-## 5. Screenshots
+---
+
+## 6. 🖼 Screenshots
 
 Here are some screenshots highlighting key features of StudentOrg:
 
 ### Dashboard
 ![Dashboard Screenshot](./screenshots/dashboard.jpg)
-*A personalized overview of your day, showing upcoming events, tasks, and a mood check-in.*
+*A personalized overview of your day with upcoming events, tasks, and mood check-ins.*
 
 ### Academic Calendar
 ![Academic Calendar Screenshot](./screenshots/calendar.jpg)
-*Visualize your academic deadlines and personal events.*
+*Visualize academic deadlines and personal events.*
 
 ### Mental Health Tracker
 ![Mental Health Tracker Screenshot](./screenshots/mental-health1.jpg)
-*Log your mood, write journal entries, and access wellness resources.*
+*Track moods, write journals, and access mental wellness resources.*
 
 ### Reminders
 ![Reminders Screenshot](./screenshots/reminders.jpg)
-*Set timely personal reminders.*
+*Set personalized reminders.*
 
 ### Chat Groups
 ![Chat Groups Screenshot](./screenshots/chat-groups.jpg)
-*Communicate and collaborate with fellow students on group projects and group assignments.*
+*Real-time group communication for projects and study sessions.*
 
 ### Finance Tracker
 ![Finance Tracker Screenshot](./screenshots/finance-tracker.jpg)
-*Track your income and expenses to manage your budget effectively.*
+*Monitor your income and expenses.*
 
 ### Task Manager
 ![Task Manager Screenshot](./screenshots/tasks.jpg)
-*Keep track of all your academic and personal tasks.*
+*Organize and track your academic and personal to-dos.*
 
-## 6. Technologies Used
+---
 
-**Backend (Node.js/Express.js)**
-* **Runtime:** Node.js
-* **Framework:** Express.js
-* **Database Interaction:** Firebase Admin SDK (Firestore, Authentication)
-* **Environment Variables:** `dotenv`
-* **CORS:** `cors`
-* **Testing:** Jest, Supertest, Babel
+## 7. 🧰 Technologies Used
 
-**Frontend (React.js/Vite)**
-* **Framework:** React.js
-* **Build Tool:** Vite
-* **Styling:** Tailwind CSS
-* **UI Components:** Shadcn UI (built on Radix UI)
-* **Icons:** Lucide React
-* **Routing:** React Router DOM
-* **HTTP Client:** Axios
-* **Date Management:** `date-fns`
-* **Toasts/Notifications:** `react-hot-toast`
-* **Charting:** Recharts
-* **Testing:** Vitest, JSDOM, React Testing Library, `@testing-library/jest-dom`, `@testing-library/user-event`
+### **Backend (Node.js / Express.js)**
+- Runtime: **Node.js**  
+- Framework: **Express.js**  
+- Database Interaction: **Firebase Admin SDK** (Firestore, Auth)  
+- Environment Variables: **dotenv**  
+- CORS: **cors**  
+- Testing: **Jest**, **Supertest**, **Babel**
 
-**Database**
-* **Google Cloud Firestore:** NoSQL cloud database for flexible and scalable data storage.
+### **Frontend (React.js / Vite)**
+- Framework: **React.js**
+- Build Tool: **Vite**
+- Styling: **Tailwind CSS**
+- UI Components: **Shadcn UI (Radix UI)**
+- Icons: **Lucide React**
+- Routing: **React Router DOM**
+- HTTP Client: **Axios**
+- Dates: **date-fns**
+- Notifications: **react-hot-toast**
+- Charts: **Recharts**
+- Testing: **Vitest**, **React Testing Library**
 
-**Authentication**
-* **Firebase Authentication:** Handles user registration, login, and session management.
+### **Database**
+- **Google Cloud Firestore** — flexible, NoSQL cloud database.
 
-## 7. Setup and Installation
+### **Authentication**
+- **Firebase Authentication** — secure user management.
 
-Follow these instructions to get a local copy of StudentOrg up and running on your machine.
+---
+
+## 8. ⚙️ Setup and Installation
 
 ### Prerequisites
-* **Node.js:** v18 or higher (LTS recommended).
-* **pnpm:** (Preferred package manager) or npm/yarn.
-    * Install pnpm: `npm install -g pnpm`
+- **Node.js:** v18+ (LTS recommended).
+- **pnpm** (Preferred) or npm/yarn.
+    ```bash
+    npm install -g pnpm
+    ```
+
 * **Firebase Project:**
-    * Create a new Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-    * Enable **Firestore Database** and **Authentication** (Email/Password provider).
-    * **Generate a Firebase Admin SDK service account key:**
-        * Go to Project settings (gear icon) -> Service accounts.
-        * Click "Generate new private key" and download the JSON file. **Keep this file secure and do NOT commit it to your public repository.**
+    * Create one in the [Firebase Console](https://console.firebase.google.com/).
+    * Enable **Firestore Database** and **Authentication**
+    * **Generate a service account key:**
+        * Go to Project settings -> Service accounts.
+
 
 ### Firebase Project Setup
 
-1.  **Firestore Rules:**
-    Set up your Firestore Security Rules to control data access. Navigate to "Firestore Database" -> "Rules" in your Firebase Console and update them.
+1.  **Firestore Rules Example**
+    
     ```firestore
     rules_version = '2';
     service cloud.firestore {
       match /databases/{database}/documents {
-        // Public data (e.g., chat rooms)
         match /artifacts/{appId}/public/data/{collection}/{document} {
-          allow read: if request.auth != null;
-          allow write: if request.auth != null;
+          allow read, write: if request.auth != null;
         }
-
-        // User-specific data (profile, finance, mental health, tasks, events, reminders)
         match /artifacts/{appId}/users/{userId}/{collectionName}/{documentId} {
           allow read, write: if request.auth != null && request.auth.uid == userId;
         }
@@ -146,39 +176,34 @@ Follow these instructions to get a local copy of StudentOrg up and running on yo
 
 ### Backend Setup
 
-1.  **Clone the repository:**
+**Clone repository and install dependencies:**
     ```bash
     git clone [https://github.com/stacy-wk/STUDENT-ORG.git](https://github.com/stacy-wk/STUDENT-ORG.git)
     cd StudentOs/server
-    ```
-2.  **Install dependencies:**
-    ```bash
     pnpm install
     ```
-3.  **Create a `.env` file:**
-    In the **root directory of your project** (`StudentOrg/`), create a file named `.env` and add the following:
+
+**Create a `.env` file in the root directory:**
     ```env
     PORT=5000
-    FIREBASE_PROJECT_ID=your-firebase-project-id # e.g., studentos-d1401
+    FIREBASE_PROJECT_ID=your-firebase-project-id
     VITE_API_BASE_URL=http://localhost:5000/api
-    JWT_SECRET=your_super_secret_jwt_key # Generate a strong, random key
-    GOOGLE_APPLICATION_CREDENTIALS=./server/config/your-service-account-key.json # Path to your downloaded Firebase Admin SDK JSON file
+    JWT_SECRET=your_super_secret_jwt_key
+    GOOGLE_APPLICATION_CREDENTIALS=./server/config/your-service-account-key.json
     ```
-    * **Important:** Replace `your-firebase-project-id`, `your_super_secret_jwt_key`, and `your-service-account-key.json` with your actual values.
+
     * Place your downloaded Firebase Admin SDK JSON file into `server/config/` and update the path accordingly.
 
 ### Frontend Setup
 
-1.  **Navigate to the client directory:**
+**Navigate to the client directory and install dependencies:**
     ```bash
     cd ../client
-    ```
-2.  **Install dependencies:**
-    ```bash
     pnpm install
     ```
-3.  **Create a `.env.local` file:**
-    In the `client/` directory, create a file named `.env.local` and add your Firebase client-side configuration. You can find this in your Firebase Console -> Project settings (gear icon) -> "Your apps" section.
+
+**Create a `.env.local` in client/:**
+   
     ```env
     VITE_FIREBASE_API_KEY="your_api_key"
     VITE_FIREBASE_AUTH_DOMAIN="your_auth_domain"
@@ -188,51 +213,57 @@ Follow these instructions to get a local copy of StudentOrg up and running on yo
     VITE_FIREBASE_APP_ID="your_app_id"
     VITE_FIREBASE_MEASUREMENT_ID="your_measurement_id"
     ```
-    * **Important:** Replace placeholders with your actual Firebase client configuration.
+---
 
-## 8. Running the Application Locally
+## 9. 💻 Running the Application Locally
 
-1.  **Start Backend:**
-    Open a terminal, navigate to the `server/` directory, and run:
+- **Start Backend:**
+    
     ```bash
+    cd server
     pnpm run dev
     ```
-    The backend will typically run on `http://localhost:5000`.
+    Runs on `http://localhost:5000`.
 
-2.  **Start Frontend:**
-    Open a *separate* terminal, navigate to the `client/` directory, and run:
+- **Start Frontend:**
+    
     ```bash
+    cd client
     pnpm run dev
     ```
-    The frontend will typically run on `http://localhost:5173`. Open this URL in your browser.
+    Runs on `http://localhost:5173`
 
-## 9. Testing
+---
 
-* **Backend Unit & Integration Tests (Jest & Supertest):**
-    * **Setup:** Ensure you have the Firebase CLI installed (`npm install -g firebase-tools`).
-    * **Run:** Navigate to the `server/` directory and run:
+## 10. 🧪 Testing
+
+* **Backend (Jest & Supertest):**
+
         ```bash
+        cd server
         pnpm test
         ```
-    * This command will automatically start the Firebase Emulators (Firestore, Auth), run tests against them, and then shut them down.
-* **Frontend Unit Tests (Vitest & React Testing Library):**
-    * **Run:** Navigate to the `client/` directory and run:
+    
+* **Frontend (Vitest & React Testing Library):**
+
         ```bash
+        cd client
         pnpm test
         ```
-    * This will execute your component tests in a JSDOM environment.
-* **Manual Testing:**
-    * Perform manual testing across various devices (mobile, tablet, desktop) and browsers (Chrome, Firefox, Edge, Safari) to ensure responsiveness, usability, and visual consistency.
+ 
+    * Perform manual tests on multiple devices and browsers to ensure responsiveness and accessibility.
 
-## 10. Deployment (Render)
+---
 
-StudentOrg is designed for easy deployment to cloud platforms like Render.
+## 11. 🚀 Deployment (Render)
 
-* **Backend Deployment (Web Service):**
-    * Deploy the `server/` directory as a Render Web Service.
-    * Configure `pnpm install` as the build command and `node server.js` as the start command.
-    * Set environment variables for `FIREBASE_PROJECT_ID`, `JWT_SECRET`, and securely provide your Firebase Admin SDK credentials (e.g., as `GOOGLE_APPLICATION_CREDENTIALS_JSON` with the full JSON content).
-* **Frontend Deployment (Static Site):**
-    * Deploy the `client/` directory as a Render Static Site.
+* **Backend Deployment**
+    * Deploy `/server` as a Render Web Service.
+    * Configure `pnpm install` as the build command and `pnpm start` as the start command.
+    * Set environment variables:
+     `GOOGLE_APPLICATION_CREDENTIALS_JSON` with the full JSON content.
+
+* **Frontend Deployment**
+    * Deploy `/client` as a Render Static Site.
     * Set `pnpm install && pnpm run build` as the build command and `dist` as the publish directory.
-    * Set environment variables for `VITE_API_BASE_URL` (pointing to your deployed backend URL) and all your `VITE_FIREBASE_...` client configuration variables.
+    * Set environment variables for `VITE_API_BASE_URL` and `VITE_FIREBASE_...` client configuration variables.
