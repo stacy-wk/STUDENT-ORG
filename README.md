@@ -270,4 +270,5 @@ Here are some screenshots highlighting key features of StudentOrg:
 
 
 ## Built with love by [Stacy Kamau](https://github.com/stacy-wk)
-## Empowering students to stay organized, connected, and mentally healthy.
+
+Empowering students to stay organized, connected, and mentally healthy.
