@@ -53,7 +53,7 @@ function Dashboard({ userId, userProfile, isAxiosAuthReady }) {
       setLoadingDashboard(true);
       try {
         // Fetch Upcoming Events
-        const eventsResponse = await axios.get(`${API_BASE_URL}/calendar/events`);
+        const eventsResponse = await axios.get(`${API_BASE_URL}/api/calendar/events`);
         const filteredEvents = eventsResponse.data
           .map(event => ({
             ...event,
@@ -67,7 +67,7 @@ function Dashboard({ userId, userProfile, isAxiosAuthReady }) {
         console.log('[Dashboard] Upcoming events fetched:', filteredEvents);
 
         // Fetch Upcoming Tasks
-        const tasksResponse = await axios.get(`${API_BASE_URL}/tasks`);
+        const tasksResponse = await axios.get(`${API_BASE_URL}/api/tasks`);
         const filteredTasks = tasksResponse.data
           .map(task => ({
             ...task,
@@ -80,7 +80,7 @@ function Dashboard({ userId, userProfile, isAxiosAuthReady }) {
         console.log('[Dashboard] Upcoming tasks fetched:', filteredTasks);
 
         // Fetch Upcoming Reminders
-        const remindersResponse = await axios.get(`${API_BASE_URL}/notifications`, { params: { type: 'reminder', read: 'false' } });
+        const remindersResponse = await axios.get(`${API_BASE_URL}/api/notifications`, { params: { type: 'reminder', read: 'false' } });
         const filteredReminders = remindersResponse.data
           .map(reminder => ({
             ...reminder,

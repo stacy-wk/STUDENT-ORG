@@ -27,7 +27,7 @@ function AcademicCalendar({ userId, auth }) {
       try {
         const idToken = await auth.currentUser.getIdToken();
         console.log('[Client] Fetching events...');
-        const response = await axios.get(`${API_BASE_URL}/calendar/events`, {
+        const response = await axios.get(`${API_BASE_URL}/api/calendar/events`, {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },

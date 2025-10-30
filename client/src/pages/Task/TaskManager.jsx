@@ -50,7 +50,7 @@ function TaskManager({ userId, auth }) {
       try {
         const idToken = await auth.currentUser.getIdToken();
         console.log('[Client] Fetching tasks...');
-        const response = await axios.get(`${API_BASE_URL}/tasks`, {
+        const response = await axios.get(`${API_BASE_URL}/api/tasks`, {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },

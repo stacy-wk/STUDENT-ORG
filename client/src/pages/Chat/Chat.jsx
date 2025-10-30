@@ -101,14 +101,14 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
       console.log('Chat: Attempting to fetch chat rooms...');
 
       try {
-        const response = await axios.get(`${API_BASE_URL}/chat/rooms`);
+        const response = await axios.get(`${API_BASE_URL}/api/chat/rooms`);
 
         const roomsWithDisplayNames = await Promise.all(response.data.map(async (room) => {
           if (room.type === 'private' && room.members && room.members.length === 2) {
             const otherUserId = room.members.find(memberId => memberId !== userId);
             if (otherUserId) {
               try {
-                const userRes = await axios.get(`${API_BASE_URL}/auth/users/${otherUserId}`);
+                const userRes = await axios.get(`${API_BASE_URL}/api/auth/users/${otherUserId}`);
                 return { ...room, name: `Chat with ${userRes.data.username || 'Unknown User'}` };
               } catch (profileError) {
                 console.warn(`Could not fetch profile for user ${otherUserId}:`, profileError);
@@ -150,7 +150,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
       console.log(`[Socket.IO Client] Emitted 'joinRoom' for ${selectedRoom.id}`);
 
       try {
-        const response = await axios.get(`${API_BASE_URL}/chat/messages/${selectedRoom.id}`);
+        const response = await axios.get(`${API_BASE_URL}/api/chat/messages/${selectedRoom.id}`);
         setMessages(response.data);
         console.log(`[Client] Fetched messages for ${selectedRoom.name}:`, response.data);
       } catch (error) {
@@ -235,7 +235,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
     }
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/auth/users?search=${searchTerm}`);
+      const response = await axios.get(`${API_BASE_URL}/api/auth/users?search=${searchTerm}`);
       const results = response.data.filter(user => user.id !== userId);
       type === 'private' ? setUserSearchResults(results) : setMemberSearchResults(results);
     } catch (error) {
