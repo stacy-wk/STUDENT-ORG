@@ -52,7 +52,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
         
         }
 
-        const response = await axios.get(`${API_BASE_URL}/api/notifications`, { params });
+        const response = await axios.get(`${API_BASE_URL}/notifications`, { params });
         setReminders(response.data);
         console.log('[RemindersPage] Reminders fetched successfully.');
       } catch (error) {

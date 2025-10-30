@@ -67,7 +67,7 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
       setLoadingMood(true);
       console.log('[MentalHealth] Attempting to fetch mood history from:', `${API_BASE_URL}/api/mental-health/mood`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/mental-health/mood`);
+        const response = await axios.get(`${API_BASE_URL}/mental-health/mood`);
         setMoodHistory(response.data);
         console.log('[MentalHealth] Mood history fetched successfully.');
       } catch (error) {
@@ -90,7 +90,7 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
       setLoadingJournal(true);
       console.log('[MentalHealth] Attempting to fetch journal entries from:', `${API_BASE_URL}/api/mental-health/journal`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/mental-health/journal`);
+        const response = await axios.get(`${API_BASE_URL}/mental-health/journal`);
         setJournalEntries(response.data);
         console.log('[MentalHealth] Journal entries fetched successfully.');
       } catch (error) {

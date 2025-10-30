@@ -59,7 +59,7 @@ function FinanceTracker({ userId, userProfile, isAxiosAuthReady }) {
       setLoading(true);
       console.log('[FinanceTracker] Attempting to fetch transactions from:', `${API_BASE_URL}/api/finance/transactions`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/finance/transactions`);
+        const response = await axios.get(`${API_BASE_URL}/finance/transactions`);
         setTransactions(response.data);
         console.log('[FinanceTracker] Transactions fetched successfully.');
       } catch (error) {
