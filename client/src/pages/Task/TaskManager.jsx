@@ -282,7 +282,7 @@ function TaskManager({ userId, auth }) {
           </button>
           <button
             type="submit"
-            className="px-5 py-2 rounded-lg bg-student-os-accent text-white hover:bg-student-os-accent/90 transition-colors shadow-md"
+            className="px-5 py-2 rounded-lg bg-student-os-accent text-black hover:bg-student-os-accent/90 transition-colors shadow-md"
           >
             {isEditing ? 'Update Task' : 'Add Task'}
           </button>
