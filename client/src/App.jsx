@@ -16,6 +16,12 @@ function App() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
   useEffect(() => {
+    console.log('ENV DEBUG:', {
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    allViteKeys: Object.keys(import.meta.env).filter(k => k.startsWith('VITE_'))
+  });
+
     console.log('App useEffect: Firebase Initialization running...');
     const initializeFirebase = async () => {
       try {
