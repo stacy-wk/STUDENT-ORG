@@ -407,7 +407,6 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
                     <li>Prioritize Sleep: Aim for consistent sleep patterns. Quality sleep impacts mood significantly.</li>
                     <li>Healthy Eating: Fuel your body with nutritious food.</li>
                     <li>Limit Screen Time: Especially before bed, reduce exposure to screens.</li>
-                    <li>Practice Gratitude: Take a few moments each day to appreciate what you have.</li>
                     <li>Set Boundaries: Learn to say no to commitments that overwhelm you.</li>
                     <li>Deep Breathing: When stressed, try a simple breathing exercise (e.g., 4-7-8 method).</li>
                   </ul>
@@ -421,15 +420,11 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
                   <ul className="list-disc list-inside space-y-2 text-student-os-dark-gray">
                     <li>
                       Kenya Association of Professional Counsellors (KAPC): While not a direct helpline, KAPC is a professional body that can help you find qualified counsellors in Kenya. You can search for their directory or contact information online.
-                      <a href="https://kapc.or.ke/" target="_blank" rel="noopener noreferrer" className="text-student-os-accent hover:underline ml-2">kapc.or.ke</a>
+                      <a href="https://www.kapc.or.ke/" target="_blank" rel="noopener noreferrer" className="text-student-os-accent hover:underline ml-2">kapc.or.ke</a>
                     </li>
                     <li>
                       Befrienders Kenya: Provides emotional support to those in distress, with a focus on suicide prevention. They often have helplines available.
-                      <a href="https://befrienderskenya.org/" target="_blank" rel="noopener noreferrer" className="text-student-os-accent hover:underline ml-2">befrienderskenya.org</a>
-                    </li>
-                    <li>
-                      Mental Health Kenya (MHK): An organization working to promote mental health awareness and support. They may have resources or direct contacts.
-                      <a href="https://mentalhealthkenya.org/" target="_blank" rel="noopener noreferrer" className="text-student-os-accent hover:underline ml-2">mentalhealthkenya.org</a>
+                      <a href="https://befrienders.org/find-support-now/befrienders-kenya/" target="_blank" rel="noopener noreferrer" className="text-student-os-accent hover:underline ml-2">befrienderskenya.org</a>
                     </li>
                     <li>
                       Your University Counseling Services: Most universities in Kenya offer free or low-cost counseling and mental health support for students. This is often the most accessible and relevant resource. Check your university's official website for their specific services and contact details.

@@ -46,7 +46,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
   const [memberSearchResults, setMemberSearchResults] = useState([]);
   const [selectedGroupToAddMember, setSelectedGroupToAddMember] = useState(null);
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
   const SOCKET_SERVER_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
   useEffect(() => {
@@ -211,7 +211,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/chat/rooms`, { roomName: newGroupName });
+      const response = await axios.post(`${API_BASE_URL}/api/chat/rooms`, { roomName: newGroupName });
       toast.success(`Group "${newGroupName}" created!`);
       setChatRooms(prev => [...prev, response.data]);
       setSelectedRoom(response.data);
@@ -253,7 +253,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/chat/private`, { targetUserId: targetUser.id });
+      const response = await axios.post(`${API_BASE_URL}/api/chat/private`, { targetUserId: targetUser.id });
       toast.success(`${targetUser.username} started!`);
       const newRoom = response.data;
       const existingRoom = chatRooms.find(room => room.id === newRoom.id);
@@ -283,7 +283,7 @@ function Chat({ userId, userProfile, auth, isAxiosAuthReady }) {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/chat/rooms/${selectedGroupToAddMember.id}/members`, { userIdToAdd: memberUser.id });
+      const response = await axios.post(`${API_BASE_URL}/api/chat/rooms/${selectedGroupToAddMember.id}/members`, { userIdToAdd: memberUser.id });
       toast.success(`${memberUser.username} added to ${selectedGroupToAddMember.name}!`);
       setChatRooms(prev => prev.map(room =>
         room.id === selectedGroupToAddMember.id ? { ...room, members: response.data.members } : room

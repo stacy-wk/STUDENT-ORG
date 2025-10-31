@@ -40,7 +40,7 @@ function TaskManager({ userId, auth }) {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
   // Task Fetch
   useEffect(() => {
@@ -91,7 +91,7 @@ function TaskManager({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log('[Client] Adding new task:', newTask);
-      const response = await axios.post(`${API_BASE_URL}/tasks`, newTask, {
+      const response = await axios.post(`${API_BASE_URL}/api/tasks`, newTask, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -121,7 +121,7 @@ function TaskManager({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log(`[Client] Updating task ID: ${editingTask.id}`, editingTask);
-      const response = await axios.put(`${API_BASE_URL}/tasks/${editingTask.id}`, editingTask, {
+      const response = await axios.put(`${API_BASE_URL}/api/tasks/${editingTask.id}`, editingTask, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -146,7 +146,7 @@ function TaskManager({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log(`[Client] Toggling completion for task ID: ${task.id}`, updatedTask);
-      await axios.put(`${API_BASE_URL}/tasks/${task.id}`, updatedTask, {
+      await axios.put(`${API_BASE_URL}/api/tasks/${task.id}`, updatedTask, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -172,7 +172,7 @@ function TaskManager({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log(`[Client] Deleting task with ID: ${taskToDelete.id}`);
-      await axios.delete(`${API_BASE_URL}/tasks/${taskToDelete.id}`, {
+      await axios.delete(`${API_BASE_URL}/api/tasks/${taskToDelete.id}`, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },

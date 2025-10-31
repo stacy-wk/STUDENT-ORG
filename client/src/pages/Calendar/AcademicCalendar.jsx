@@ -18,7 +18,7 @@ function AcademicCalendar({ userId, auth }) {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false); 
   const [eventToDelete, setEventToDelete] = useState(null); 
 
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -77,7 +77,7 @@ function AcademicCalendar({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log('[Client] Adding new event:', newEvent);
-      const response = await axios.post(`${API_BASE_URL}/calendar/events`, newEvent, {
+      const response = await axios.post(`${API_BASE_URL}/api/calendar/events`, newEvent, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -113,7 +113,7 @@ function AcademicCalendar({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log(`[Client] Deleting event with ID: ${eventToDelete.id}`);
-      await axios.delete(`${API_BASE_URL}/calendar/events/${eventToDelete.id}`, {
+      await axios.delete(`${API_BASE_URL}/api/calendar/events/${eventToDelete.id}`, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
