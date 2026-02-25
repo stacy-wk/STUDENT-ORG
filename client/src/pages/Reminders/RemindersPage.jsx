@@ -43,7 +43,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
         return;
       }
       setLoading(true);
-      console.log('[RemindersPage] Attempting to fetch reminders from:', `${API_BASE_URL}/api/notifications`); 
+      console.log('[RemindersPage] Attempting to fetch reminders from:', `${API_BASE_URL}/notifications`); 
       try {
         const params = { type: 'reminder' }; 
         if (filterStatus === 'done') {
@@ -52,7 +52,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
         
         }
 
-        const response = await axios.get(`${API_BASE_URL}/api/notifications`, { params });
+        const response = await axios.get(`${API_BASE_URL}/notifications`, { params });
         setReminders(response.data);
         console.log('[RemindersPage] Reminders fetched successfully.');
       } catch (error) {
@@ -90,7 +90,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
 
     console.log('[RemindersPage] Sending add reminder request with payload:', payload);
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/notifications`, payload);
+      const response = await axios.post(`${API_BASE_URL}/notifications`, payload);
       setReminders(prev => [response.data, ...prev]); 
       toast.success('Reminder added successfully!');
       console.log('[RemindersPage] Reminder added successfully:', response.data);
@@ -114,7 +114,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
 
     console.log(`[RemindersPage] Attempting to mark reminder ${reminderId} as done.`);
     try {
-      const response = await axios.put(`${API_BASE_URL}/api/notifications/${reminderId}/read`); 
+      const response = await axios.put(`${API_BASE_URL}/notifications/${reminderId}/read`); 
       setReminders(prev => prev.map(notif =>
         notif.id === reminderId ? { ...notif, read: true } : notif
       ));
@@ -138,7 +138,7 @@ function RemindersPage({ userId, userProfile, isAxiosAuthReady }) {
 
     console.log(`[RemindersPage] Attempting to delete reminder with ID: ${reminderId}`);
     try {
-      await axios.delete(`${API_BASE_URL}/api/notifications/${reminderId}`); 
+      await axios.delete(`${API_BASE_URL}/notifications/${reminderId}`); 
       setReminders(prev => prev.filter(notif => notif.id !== reminderId));
       toast.success('Reminder deleted successfully!');
       console.log(`[RemindersPage] Reminder ${reminderId} deleted successfully.`);

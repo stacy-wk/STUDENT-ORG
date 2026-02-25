@@ -27,7 +27,7 @@ function AcademicCalendar({ userId, auth }) {
       try {
         const idToken = await auth.currentUser.getIdToken();
         console.log('[Client] Fetching events...');
-        const response = await axios.get(`${API_BASE_URL}/api/calendar/events`, {
+        const response = await axios.get(`${API_BASE_URL}/calendar/events`, {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
@@ -77,7 +77,7 @@ function AcademicCalendar({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log('[Client] Adding new event:', newEvent);
-      const response = await axios.post(`${API_BASE_URL}/api/calendar/events`, newEvent, {
+      const response = await axios.post(`${API_BASE_URL}/calendar/events`, newEvent, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },
@@ -113,7 +113,7 @@ function AcademicCalendar({ userId, auth }) {
     try {
       const idToken = await auth.currentUser.getIdToken();
       console.log(`[Client] Deleting event with ID: ${eventToDelete.id}`);
-      await axios.delete(`${API_BASE_URL}/api/calendar/events/${eventToDelete.id}`, {
+      await axios.delete(`${API_BASE_URL}/calendar/events/${eventToDelete.id}`, {
         headers: {
           Authorization: `Bearer ${idToken}`,
         },

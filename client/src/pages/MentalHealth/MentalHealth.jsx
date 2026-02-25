@@ -65,9 +65,9 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
         return;
       }
       setLoadingMood(true);
-      console.log('[MentalHealth] Attempting to fetch mood history from:', `${API_BASE_URL}/api/mental-health/mood`);
+      console.log('[MentalHealth] Attempting to fetch mood history from:', `${API_BASE_URL}/mental-health/mood`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/mental-health/mood`);
+        const response = await axios.get(`${API_BASE_URL}/mental-health/mood`);
         setMoodHistory(response.data);
         console.log('[MentalHealth] Mood history fetched successfully.');
       } catch (error) {
@@ -88,9 +88,9 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
         return;
       }
       setLoadingJournal(true);
-      console.log('[MentalHealth] Attempting to fetch journal entries from:', `${API_BASE_URL}/api/mental-health/journal`);
+      console.log('[MentalHealth] Attempting to fetch journal entries from:', `${API_BASE_URL}/mental-health/journal`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/mental-health/journal`);
+        const response = await axios.get(`${API_BASE_URL}/mental-health/journal`);
         setJournalEntries(response.data);
         console.log('[MentalHealth] Journal entries fetched successfully.');
       } catch (error) {
@@ -120,7 +120,7 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
     };
     console.log('[MentalHealth] Sending log mood request with payload:', payload);
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/mental-health/mood`, payload);
+      const response = await axios.post(`${API_BASE_URL}/mental-health/mood`, payload);
       setMoodHistory(prev => [response.data, ...prev]);
       setSelectedMood(null);
       setMoodNotes('');
@@ -149,7 +149,7 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
     };
     console.log('[MentalHealth] Sending create journal entry request with payload:', payload);
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/mental-health/journal`, payload);
+      const response = await axios.post(`${API_BASE_URL}/mental-health/journal`, payload);
       setJournalEntries(prev => [response.data, ...prev]);
       setJournalTitle('');
       setJournalContent('');
@@ -173,7 +173,7 @@ function MentalHealth({ userId, userProfile, auth, isAxiosAuthReady }) {
 
     console.log(`[MentalHealth] Attempting to delete journal entry with ID: ${journalId}`);
     try {
-      await axios.delete(`${API_BASE_URL}/api/mental-health/journal/${journalId}`);
+      await axios.delete(`${API_BASE_URL}/mental-health/journal/${journalId}`);
       setJournalEntries(prev => prev.filter(entry => entry.id !== journalId));
       toast.success('Journal entry deleted successfully!');
       console.log(`[MentalHealth] Journal entry ${journalId} deleted successfully.`);

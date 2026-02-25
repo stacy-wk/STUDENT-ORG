@@ -57,9 +57,9 @@ function FinanceTracker({ userId, userProfile, isAxiosAuthReady }) {
         return;
       }
       setLoading(true);
-      console.log('[FinanceTracker] Attempting to fetch transactions from:', `${API_BASE_URL}/api/finance/transactions`);
+      console.log('[FinanceTracker] Attempting to fetch transactions from:', `${API_BASE_URL}/finance/transactions`);
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/finance/transactions`);
+        const response = await axios.get(`${API_BASE_URL}/finance/transactions`);
         setTransactions(response.data);
         console.log('[FinanceTracker] Transactions fetched successfully.');
       } catch (error) {
@@ -98,7 +98,7 @@ function FinanceTracker({ userId, userProfile, isAxiosAuthReady }) {
 
     console.log('[FinanceTracker] Sending add transaction request with payload:', payload);
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/finance/transactions`, payload);
+      const response = await axios.post(`${API_BASE_URL}/finance/transactions`, payload);
       setTransactions(prev => [response.data, ...prev]); // New transaction go to top
       toast.success('Transaction added successfully!');
       console.log('[FinanceTracker] Transaction added successfully:', response.data);
@@ -126,7 +126,7 @@ function FinanceTracker({ userId, userProfile, isAxiosAuthReady }) {
 
     console.log(`[FinanceTracker] Attempting to delete transaction with ID: ${transactionId}`);
     try {
-      await axios.delete(`${API_BASE_URL}/api/finance/transactions/${transactionId}`);
+      await axios.delete(`${API_BASE_URL}/finance/transactions/${transactionId}`);
       setTransactions(prev => prev.filter(t => t.id !== transactionId));
       toast.success('Transaction deleted successfully!');
       console.log(`[FinanceTracker] Transaction ${transactionId} deleted successfully.`);
