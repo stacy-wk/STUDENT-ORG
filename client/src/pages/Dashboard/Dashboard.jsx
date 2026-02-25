@@ -53,7 +53,7 @@ function Dashboard({ userId, userProfile, isAxiosAuthReady }) {
       setLoadingDashboard(true);
       try {
         // Fetch Upcoming Events
-        const eventsResponse = await axios.get(`${API_BASE_URL}/api/calendar/events`);
+        const eventsResponse = await axios.get(`${API_BASE_URL}/calendar/events`);
         const filteredEvents = eventsResponse.data
           .map(event => ({
             ...event,
