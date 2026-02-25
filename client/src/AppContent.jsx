@@ -90,7 +90,7 @@ function AppContent({ auth, db }) {
         setLoadingProfile(true);
         console.log('  Attempting to fetch user profile...');
         try {
-          const response = await axios.get(`${API_BASE_URL}/api/auth/profile`);
+          const response = await axios.get(`${API_BASE_URL}/auth/profile`);
           setUserProfile(response.data);
           console.log('  User Profile fetched successfully:', response.data);
         } catch (error) {
