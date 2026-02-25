@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
+import axios from 'axios';
 
 function Signup({ auth, db }) {
   const [email, setEmail] = useState('');
@@ -37,13 +38,19 @@ function Signup({ auth, db }) {
       const user = userCredential.user;
 
       const appId = typeof __app_id !== 'undefined' ? __app_id : import.meta.env.VITE_FIREBASE_PROJECT_ID;
-      const userProfileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', user.uid);
+      // const userProfileRef = doc(db, 'artifacts', appId, 'users', user.uid, 'profile', user.uid);
 
-      await setDoc(userProfileRef, {
+      // await setDoc(userProfileRef, {
+      //   email: user.email,
+      //   username: username,
+      //   createdAt: serverTimestamp(),
+      //   updatedAt: serverTimestamp(),
+      // });
+
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/create-profile`, {
+        uid: user.uid,
         email: user.email,
-        username: username,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
+        username,
       });
 
       toast.success('Account created successfully! Loading your dashboard...');
