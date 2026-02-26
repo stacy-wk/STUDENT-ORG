@@ -1,4 +1,6 @@
-import admin from 'firebase-admin';
+// import admin from 'firebase-admin';
+
+import {auth} from '../config/firebaseAdmin.js';
 
 // Middleware to authN Firebase ID tokens
 const authenticateToken = async (req, res, next) => {
@@ -15,7 +17,7 @@ const authenticateToken = async (req, res, next) => {
 
   try {
     // Verify Firebase ID token
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const decodedToken = await auth.verifyIdToken(idToken);
     console.log(`[AuthMiddleware] Token verified for UID: ${decodedToken.uid}`);
 
     req.userId = decodedToken.uid;
