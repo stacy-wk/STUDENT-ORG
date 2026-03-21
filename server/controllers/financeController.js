@@ -7,7 +7,7 @@ const TRANSACTIONS_COLLECTION = 'transactions';
 // Add new transaction
 const addTransaction = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { type, amount, category, description, date } = req.body;
 
     if (!type || !amount || !category) {
@@ -47,7 +47,7 @@ const addTransaction = async (req, res) => {
 // Get all transactions
 const getTransactions = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const transactionsRef = db.collection('artifacts').doc(process.env.FIREBASE_PROJECT_ID).collection('users').doc(userId).collection(TRANSACTIONS_COLLECTION);
     const querySnapshot = await transactionsRef.orderBy('timestamp', 'desc').get();
 
@@ -70,7 +70,7 @@ const getTransactions = async (req, res) => {
 // Delete a transaction
 const deleteTransaction = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const transactionId = req.params.id;
 
     if (!transactionId) {

@@ -8,7 +8,7 @@ const JOURNAL_ENTRIES_COLLECTION = 'journalEntries';
 // Log new mood entry
 const logMood = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { moodRating, notes } = req.body;
 
     if (!moodRating) {
@@ -36,7 +36,7 @@ const logMood = async (req, res) => {
 // Get all mood entries
 const getMoodHistory = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const moodEntriesRef = db.collection('artifacts').doc(process.env.FIREBASE_PROJECT_ID).collection('users').doc(userId).collection(MOOD_ENTRIES_COLLECTION);
     const querySnapshot = await moodEntriesRef.orderBy('timestamp', 'desc').get();
 
@@ -58,7 +58,7 @@ const getMoodHistory = async (req, res) => {
 // New journal entry
 const createJournalEntry = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { title, content, moodEntryId } = req.body;
 
     if (!content) {
@@ -87,7 +87,7 @@ const createJournalEntry = async (req, res) => {
 // Get all journal entries
 const getJournalEntries = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const journalEntriesRef = db.collection('artifacts').doc(process.env.FIREBASE_PROJECT_ID).collection('users').doc(userId).collection(JOURNAL_ENTRIES_COLLECTION);
     const querySnapshot = await journalEntriesRef.orderBy('timestamp', 'desc').get();
 
@@ -109,7 +109,7 @@ const getJournalEntries = async (req, res) => {
 // Delete a journal entry
 const deleteJournalEntry = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const journalId = req.params.id;
 
     if (!journalId) {

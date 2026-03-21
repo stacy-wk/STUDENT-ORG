@@ -57,7 +57,7 @@ const getMessages = async (req, res) => {
 
 const getChatRooms = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     console.log(`[ChatController:getChatRooms] Fetching chat rooms for userId: ${userId}`); 
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized: User ID not found.' });
@@ -82,7 +82,7 @@ const getChatRooms = async (req, res) => {
 
 const createChatRoom = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { roomName } = req.body;
     console.log(`[ChatController:createChatRoom] Creating group "${roomName}" for userId: ${userId}`);
 

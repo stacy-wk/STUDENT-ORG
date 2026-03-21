@@ -5,7 +5,7 @@ const USERS_COLLECTION = 'users';
 
 const getUserProfile = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     console.log(`[AuthController:getUserProfile] Attempting to fetch profile for userId: ${userId}`); 
     const userProfile = await firestoreService.getDocumentById(USERS_COLLECTION, userId);
 
@@ -32,7 +32,7 @@ const getUserProfile = async (req, res) => {
 
 const updateUserProfile = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const updateData = req.body;
     console.log(`[AuthController:updateUserProfile] Updating profile for userId: ${userId} with data:`, updateData); 
 
@@ -81,7 +81,7 @@ const getUserById = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const searchTerm = req.query.search;
     console.log(`[AuthController:getUsers] Searching users for "${searchTerm}" by userId: ${userId}`); 
 

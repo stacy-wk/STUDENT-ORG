@@ -6,7 +6,7 @@ const NOTIFICATIONS_COLLECTION = 'notifications';
 // Add Notifs
 const addNotification = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { title, message, type, scheduledAt } = req.body;
 
     if (!title || !message || !type) {
@@ -47,7 +47,7 @@ const addNotification = async (req, res) => {
 // Get Notifs
 const getNotifications = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const { type, read } = req.query;
 
     let notificationsRef = db.collection('artifacts').doc(process.env.FIREBASE_PROJECT_ID).collection('users').doc(userId).collection(NOTIFICATIONS_COLLECTION);
@@ -80,7 +80,7 @@ const getNotifications = async (req, res) => {
 
 const markAsRead = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const notificationId = req.params.id;
 
     if (!notificationId) {
@@ -118,7 +118,7 @@ const markAsRead = async (req, res) => {
 // Delete Notifs
 const deleteNotification = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.user.uid;
     const notificationId = req.params.id;
 
     if (!notificationId) {
